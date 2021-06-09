@@ -17,7 +17,6 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 	"net/http"
 	"net/http/pprof"
 	"os"
@@ -96,8 +95,6 @@ func main() {
 		setupLog.Error(err, "unable to set up custom cache settings")
 		os.Exit(1)
 	}
-
-	fmt.Printf("DEBUG>> mgrOptions:\n%+v\n", customMgrOptions)
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), *customMgrOptions)
 

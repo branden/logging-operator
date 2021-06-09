@@ -17,7 +17,6 @@ package controllers
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"regexp"
 
 	"emperror.dev/errors"
@@ -218,11 +217,7 @@ func SetupLoggingWithManager(mgr ctrl.Manager, logger logr.Logger) *ctrl.Builder
 
 	builder := ctrl.NewControllerManagedBy(mgr).
 		For(&loggingv1beta1.Logging{}).
-		// Owns(&corev1.Pod{}).
-		Watches(&source.Kind{Type: &corev1.Pod{}}, handler.EnqueueRequestsFromMapFunc(func(obj client.Object) []reconcile.Request {
-			fmt.Printf("DEBUG>> pod name: %v namespace: %v\n", obj.GetName(), obj.GetNamespace())
-			return nil
-		})).
+		Owns(&corev1.Pod{}).
 		Watches(&source.Kind{Type: &loggingv1beta1.ClusterOutput{}}, requestMapper).
 		Watches(&source.Kind{Type: &loggingv1beta1.ClusterFlow{}}, requestMapper).
 		Watches(&source.Kind{Type: &loggingv1beta1.Output{}}, requestMapper).
