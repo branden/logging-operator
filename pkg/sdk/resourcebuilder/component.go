@@ -194,8 +194,12 @@ func Operator(parent reconciler.ResourceOwner, config ComponentConfig) (runtime.
 						Name:    "logging-operator",
 						Image:   Image,
 						Command: []string{"/manager"},
-						Args:    []string{"--enable-leader-election"},
-						Env:     webhookEnv,
+						Args: []string{"--enable-leader-election",
+							"--logging-namespace",
+							config.Namespace,
+							"--logging-name",
+							parent.GetName()},
+						Env: webhookEnv,
 						Resources: corev1.ResourceRequirements{
 							Limits: corev1.ResourceList{
 								corev1.ResourceCPU:    resource.MustParse("300m"),
