@@ -196,9 +196,9 @@ func Operator(parent reconciler.ResourceOwner, config ComponentConfig) (runtime.
 						Command: []string{"/manager"},
 						Args: []string{"--enable-leader-election",
 							"--logging-namespace",
-							config.Namespace,
+							"acquia-system",
 							"--logging-name",
-							parent.GetName()},
+							"logging"},
 						Env: webhookEnv,
 						Resources: corev1.ResourceRequirements{
 							Limits: corev1.ResourceList{
